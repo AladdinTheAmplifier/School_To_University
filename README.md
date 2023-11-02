@@ -1,2 +1,2 @@
 # School_To_University_Backend
-School_To_University
+School_To_University_Backend
