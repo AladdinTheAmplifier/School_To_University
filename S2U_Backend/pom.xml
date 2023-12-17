@@ -12,24 +12,31 @@
 	<name>s2u.parent-service</name>
 	<description>Parent service contains all the microservices</description>
 
+	<!--=============================Parent======================================-->
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.7.0</version>
 	</parent>
+	<!--=========================================================================-->
 
+	<!--============================Properties===================================-->
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>11</java.version>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
 	</properties>
+	<!--=========================================================================-->
 
+	<!--============================Modules======================================-->
 	<modules>
 		<module>s2u-common-lib</module>
 		<module>com.s2u.admission-registry-service</module>
 	</modules>
+	<!--=========================================================================-->
 
+	<!--========================Spring Boot Dpendencies===========================-->
 	<dependencies>
 
 		<dependency>
@@ -49,7 +56,9 @@
 			<type>maven-plugin</type>
 		</dependency>
 	</dependencies>
+	<!--=========================================================================-->
 
+	<!--======================Project Build Configuration========================-->
 	<build>
 		<plugins>
 			<plugin>
@@ -73,5 +82,5 @@
 			</plugin>
 		</plugins>
 	</build>
-
+	<!--=========================================================================-->
 </project>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+	<Appenders>
+		<Console name="LogInJSON" target="SYSTEM_OUT" immediateFlush="false">
+			<PatternLayout>
+				<pattern>
+					{"timeStamp":"%d{yyyy-MM-dd
+					HH:mm:ss.SSS}","status":"%X{httpStatus}","eCode":"%X{eCode}","path":"%X{path}","contentType":"%X{contentType}","operation":"%X{operation}","level":"%level","thread":"%thread","category":"%c{1.}","message":"%msg","eStackTrace":"%X{eStackTrace}"}%n</pattern>
+			</PatternLayout>
+		</Console>
+		<RollingFile name="FileLog" fileName="logs/vmis-customer-service.log"
+			filePattern="logs/vmis-customer-service.%d{yyyy-MM-dd}.%i.log"
+			ignoreExceptions="false" immediateFlush="false">
+			<PatternLayout>
+				<pattern>
+					{"timeStamp":"%d{yyyy-MM-dd
+					HH:mm:ss.SSS}","status":"%X{httpStatus}","eCode":"%X{eCode}","path":"%X{path}","contentType":"%X{contentType}","operation":"%X{operation}","level":"%level","thread":"%thread","category":"%c{1.}","message":"%msg","eStackTrace":"%X{eStackTrace}"}%n</pattern>
+			</PatternLayout>
+			<Policies>
+				<SizeBasedTriggeringPolicy size="10MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="5" />
+		</RollingFile>
+	</Appenders>
+	<Loggers>
+		<AsyncLogger name="com.victor.vmis" level="info"
+			additivity="false" includeLocation="true">
+			<AppenderRef ref="LogInJSON" />
+			<AppenderRef ref="FileLog" />
+		</AsyncLogger>
+		<AsyncRoot level="info" includeLocation="true">
+			<AppenderRef ref="LogInJSON" />
+			<AppenderRef ref="FileLog" />
+		</AsyncRoot>
+	</Loggers>
+</Configuration>

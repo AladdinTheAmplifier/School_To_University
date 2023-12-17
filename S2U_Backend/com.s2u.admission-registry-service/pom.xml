@@ -8,25 +8,38 @@
 	<artifactId>com.s2u.admission-registry-service</artifactId>
 	<name>com.s2u.admission-registry-service</name>
 	<description>S2U Admission Registry Information</description>
+	<packaging>jar</packaging>
 
+
+	<!--====================Parent Service Configuration=========================-->
+	<parent>
+		<groupId>com.s2u.parent-service</groupId>
+		<artifactId>s2u.parent-service</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<!--=========================================================================-->
+
+	<!--============================Properties===================================-->
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>11</java.version>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
 		<vmis-common-lib.version>0.0.1-SNAPSHOT</vmis-common-lib.version>
+		<mapstruct-jdk11>1.5.5.Final</mapstruct-jdk11>
 	</properties>
+	<!--=========================================================================-->
 
-	<parent>
-		<groupId>com.s2u.parent-service</groupId>
-		<artifactId>s2u.parent-service</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
-	</parent>
-
+	<!--========================Spring Boot Dpendencies===========================-->
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 
 		<dependency>
@@ -41,16 +54,47 @@
 			<version>${vmis-common-lib.version}</version>
 		</dependency>
 
-		<!--
-		https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-compiler-plugin -->
 		<dependency>
 			<groupId>org.apache.maven.plugins</groupId>
 			<artifactId>maven-compiler-plugin</artifactId>
 			<version>3.11.0</version>
 		</dependency>
 
-	</dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-log4j2</artifactId>
+		</dependency>
 
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct</artifactId>
+			<version>${mapstruct-jdk11}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+		</dependency>
+	</dependencies>
+	<!--=========================================================================-->
+
+	<!--======================Project Build Configuration========================-->
 	<build>
 		<plugins>
 			<plugin>
@@ -74,5 +118,5 @@
 			</plugin>
 		</plugins>
 	</build>
-
+	<!--=========================================================================-->
 </project>

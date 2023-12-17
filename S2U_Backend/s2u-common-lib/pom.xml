@@ -7,23 +7,28 @@
 	<groupId>com.s2u.common-lib</groupId>
 	<artifactId>s2u-common-lib</artifactId>
 	<packaging>pom</packaging>
-
+	
 	<name>s2u-common-lib-service</name>
 	<description>S2U Common Information</description>
 
+	<!--====================Parent Service Configuration=========================-->
+	<parent>
+		<groupId>com.s2u.parent-service</groupId>
+		<artifactId>s2u.parent-service</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<!--=========================================================================-->
+
+	<!--============================Properties===================================-->
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>11</java.version>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
 	</properties>
+	<!--=========================================================================-->
 
-	<parent>
-		<groupId>com.s2u.parent-service</groupId>
-		<artifactId>s2u.parent-service</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
-	</parent>
-
+	<!--========================Spring Boot Dpendencies===========================-->
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -42,11 +47,10 @@
 			<version>3.11.0</version>
 			<type>maven-plugin</type>
 		</dependency>
-		<!--
-		https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-surefire-plugin -->
-
 	</dependencies>
+	<!--=========================================================================-->
 
+	<!--======================Project Build Configuration========================-->
 	<build>
 		<finalName>s2u-common-lib</finalName>
 		<plugins>
@@ -71,5 +75,5 @@
 			</plugin>
 		</plugins>
 	</build>
-
+	<!--=========================================================================-->
 </project>
