@@ -51,7 +51,7 @@ public class InquiryStudentDO implements Auditable {
 	private String inquiryPreviousSchool;
 
 	private String inquiryDate;
-
+ 
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "follow_up_call_log_id")
 	private InquiryFollowUpDO inquiryFollowUpDO;
