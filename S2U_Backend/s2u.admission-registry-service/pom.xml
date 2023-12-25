@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.s2u.admission-registry-service</groupId>
+	<artifactId>s2u.admission-registry-service</artifactId>
+
+	<name>s2u.admission-registry-service</name>
+	<description>S2U Admission Registry Information</description>
+
+	<!--====================Parent Service Configuration=========================-->
+	<parent>
+		<groupId>com.s2u.parent-service</groupId>
+		<artifactId>s2u.parent-service</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<!--=========================================================================-->
+
+	<!--============================Properties===================================-->
+	<properties>
+		<java.version>17</java.version>
+		<s2u-common-lib.version>0.0.1-SNAPSHOT</s2u-common-lib.version>
+		<org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
+		<hibernate-envers.version>6.4.1.Final</hibernate-envers.version>
+		<hibernate-core.version>6.4.1.Final</hibernate-core.version>
+		<hibernate-entitymanager.version>5.6.15.Final</hibernate-entitymanager.version>
+	</properties>
+	<!--=========================================================================-->
+
+	<!--========================Spring Boot Dpendencies===========================-->
+	<dependencies>
+
+		<dependency>
+			<groupId>com.s2u.common-lib</groupId>
+			<artifactId>s2u.common-lib-service</artifactId>
+			<version>${s2u-common-lib.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-envers</artifactId>
+			<version>${hibernate-envers.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-compiler-plugin</artifactId>
+			<version>3.11.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-log4j2</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct</artifactId>
+			<version>${org.mapstruct.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${hibernate-core.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>${hibernate-entitymanager.version}</version>
+		</dependency>
+	</dependencies>
+	<!--=========================================================================-->
+
+	<!--======================Project Build Configuration========================-->
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+	<!--=========================================================================-->
+</project>
