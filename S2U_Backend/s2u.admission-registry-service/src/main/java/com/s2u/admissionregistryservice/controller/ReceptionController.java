@@ -21,7 +21,7 @@ public class ReceptionController {
 
 	private static final Logger LOG = LoggerFactory.getLogger(ReceptionController.class);
 
-	@Autowired(required = true)
+	@Autowired
 	ReceptionService receptionService;
 
 	@GetMapping("/healthCheck")

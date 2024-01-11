@@ -1,4 +1,4 @@
-package com.s2u.admissionregistryservice.service.impl;
+package com.s2u.admissionregistryservice.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +26,7 @@ public class ReceptionServiceImpl implements ReceptionService {
 	ReceptionValidator receptionValidator;
 
 	@Autowired
-	ReceptionMapper mapper;
+	ReceptionMapper receptionMapper;
 
 	@Autowired
 	InquiryStudentRepository inquiryStudentRepository;
@@ -34,17 +34,22 @@ public class ReceptionServiceImpl implements ReceptionService {
 	@Override
 	public ReceptionAggregateBO addInquiryStudent(ReceptionAggregateBO receptionAggregateBO) {
 		LOG.info("--start method of addInquiryStudent");
+		@SuppressWarnings("unused")
 		InquiryStudentDO savedinquiryStudent = null;
 		try {
 			ValidatorUtil.handleValidation(receptionAggregateBO, receptionValidator);
-			InquiryStudentDO inquiryStudentDO = mapper.toInquiryStudentDO(receptionAggregateBO.getInquiryStudent());
+			// InquiryStudentDO inquiryStudentDOs =
+			// receptionMapper.toInquiryStudentDO(receptionAggregateBO.getInquiryStudent());
+			InquiryStudentDO inquiryStudentDO = new InquiryStudentDO();
+			inquiryStudentDO.setInquiryStudentName(receptionAggregateBO.getInquiryStudent().getInquiryStudentName());
+			inquiryStudentDO.setInquiryStudentAge(receptionAggregateBO.getInquiryStudent().getInquiryStudentAge());
 			inquiryStudentDO.setIsActive(Constants.IS_ACTIVE);
 			inquiryStudentDO.setAudit(createAuditModel(inquiryStudentDO.getInquiryStudentName()));
 			savedinquiryStudent = inquiryStudentRepository.save(inquiryStudentDO);
 		} catch (S2UConfigurationException e) {
-			LOG.equals("--error occured in addInquiryStudent--" + e);
+			LOG.equals("--error occured in addInquiryStudent--" + e.getMessage());
 		}
-		return ReceptionAggregateBOBuilder.create().withInquiryStudent(mapper.toInquiryStudentBO(savedinquiryStudent))
+		return ReceptionAggregateBOBuilder.create().withInquiryStudent(receptionAggregateBO.getInquiryStudent())
 				.build();
 	}
 
@@ -55,6 +60,7 @@ public class ReceptionServiceImpl implements ReceptionService {
 		return auditModel;
 	}
 
+	@SuppressWarnings("unused")
 	private AuditModel updateAuditModel(String userName, AuditModel audit) {
 		audit.setUpdatedDate(new java.util.Date());
 		audit.setUpdatedBy(userName);
