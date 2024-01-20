@@ -36,6 +36,5 @@ public class ReceptionController {
 		ReceptionAggregateBO receptionAggregateBO = MapSerializer.fromMap(inquiryStudentMap,
 				ReceptionAggregateBO.class);
 		return MapSerializer.toMap(receptionService.addInquiryStudent(receptionAggregateBO));
-
 	}
 }

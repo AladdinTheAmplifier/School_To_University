@@ -38,7 +38,7 @@ public class InquiryFollowUpDO implements Auditable {
 	private int followedUpCount;
 
 	@Column(name = "is_active")
-	private boolean isActive;
+	private int isActive;
 
 	@Embedded
 	public AuditModel auditModel;
@@ -111,11 +111,11 @@ public class InquiryFollowUpDO implements Auditable {
 		this.followedUpCount = followedUpCount;
 	}
 
-	public boolean isActive() {
+	public int getIsActive() {
 		return isActive;
 	}
 
-	public void setActive(boolean isActive) {
+	public void setIsActive(int isActive) {
 		this.isActive = isActive;
 	}
 

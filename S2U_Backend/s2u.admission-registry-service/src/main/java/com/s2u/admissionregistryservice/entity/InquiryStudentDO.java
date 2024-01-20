@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.s2u.admissionregistryservice.config.Auditable;
 
 @Entity
@@ -20,8 +21,8 @@ public class InquiryStudentDO implements Auditable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "inquiry_student_id")
-	private long inquiryStudentId;
+	@Column(name = "inquiry_student_id", unique = true)
+	private Long inquiryStudentId;
 
 	@Column(name = "inquiry_student_name")
 	private String inquiryStudentName;
@@ -49,8 +50,6 @@ public class InquiryStudentDO implements Auditable {
 
 	@Column(name = "inquiry_previous_school")
 	private String inquiryPreviousSchool;
-
-	private String inquiryDate;
 
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "follow_up_call_log_id")
@@ -154,14 +153,6 @@ public class InquiryStudentDO implements Auditable {
 		this.inquiryPreviousSchool = inquiryPreviousSchool;
 	}
 
-	public String getInquiryDate() {
-		return inquiryDate;
-	}
-
-	public void setInquiryDate(String inquiryDate) {
-		this.inquiryDate = inquiryDate;
-	}
-
 	public InquiryFollowUpDO getInquiryFollowUpDO() {
 		return inquiryFollowUpDO;
 	}
@@ -193,8 +184,8 @@ public class InquiryStudentDO implements Auditable {
 				+ ", inquiryParentName=" + inquiryParentName + ", inquiryPhoneNumber=" + inquiryPhoneNumber
 				+ ", inquiryWhatsappNumber=" + inquiryWhatsappNumber + ", inquiryEmailAddress=" + inquiryEmailAddress
 				+ ", inquiryClassToBeAdmitted=" + inquiryClassToBeAdmitted + ", inquiryPreviousSchool="
-				+ inquiryPreviousSchool + ", inquiryDate=" + inquiryDate + ", inquiryFollowUpDO=" + inquiryFollowUpDO
-				+ ", isActive=" + isActive + ", auditModel=" + auditModel + "]";
+				+ inquiryPreviousSchool + ", inquiryFollowUpDO=" + inquiryFollowUpDO + ", isActive=" + isActive
+				+ ", auditModel=" + auditModel + "]";
 	}
 
 }

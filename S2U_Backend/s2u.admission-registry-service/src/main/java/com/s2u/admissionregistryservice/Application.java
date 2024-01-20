@@ -3,10 +3,9 @@ package com.s2u.admissionregistryservice;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import org.springframework.context.annotation.ComponentScan;
 
-@SpringBootApplication(exclude={DataSourceAutoConfiguration.class} )
-@ComponentScan(value = {"com.s2u.admissionregistryservice.impl","s2u.common-lib-service"})
+@SpringBootApplication(exclude = { DataSourceAutoConfiguration.class }, scanBasePackages = {
+		"com.s2u.admissionregistryservice", "com.s2u.commonlib" })
 public class Application {
 
 	public static void main(String[] args) {

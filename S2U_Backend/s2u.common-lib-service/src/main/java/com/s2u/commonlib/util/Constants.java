@@ -8,4 +8,6 @@ public class Constants {
 
 	public static final int IS_ACTIVE = 1;
 	public static final int INACTIVE = 0;
+	
+	public static final String S2U_USER_NAME = "s2u";
 }

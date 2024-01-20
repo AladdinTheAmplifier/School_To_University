@@ -1,5 +1,7 @@
 package com.s2u.admissionregistryservice.service.impl;
 
+import javax.transaction.Transactional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,18 +14,23 @@ import com.s2u.admissionregistryservice.entity.InquiryStudentDO;
 import com.s2u.admissionregistryservice.mapper.ReceptionMapper;
 import com.s2u.admissionregistryservice.repository.InquiryStudentRepository;
 import com.s2u.admissionregistryservice.service.ReceptionService;
+import com.s2u.admissionregistryservice.validation.ReceptionDuplicateHandler;
 import com.s2u.admissionregistryservice.validation.ReceptionValidator;
 import com.s2u.commonlib.exception.S2UConfigurationException;
 import com.s2u.commonlib.util.Constants;
 import com.s2u.commonlib.util.ValidatorUtil;
 
 @Service
+@Transactional
 public class ReceptionServiceImpl implements ReceptionService {
 
 	private static final Logger LOG = LoggerFactory.getLogger(ReceptionServiceImpl.class);
 
 	@Autowired
 	ReceptionValidator receptionValidator;
+	
+	@Autowired
+	ReceptionDuplicateHandler receptionDuplicateHandler;
 
 	@Autowired
 	ReceptionMapper receptionMapper;
@@ -31,6 +38,7 @@ public class ReceptionServiceImpl implements ReceptionService {
 	@Autowired
 	InquiryStudentRepository inquiryStudentRepository;
 
+	@SuppressWarnings("unlikely-arg-type")
 	@Override
 	public ReceptionAggregateBO addInquiryStudent(ReceptionAggregateBO receptionAggregateBO) {
 		LOG.info("--start method of addInquiryStudent");
@@ -38,19 +46,24 @@ public class ReceptionServiceImpl implements ReceptionService {
 		InquiryStudentDO savedinquiryStudent = null;
 		try {
 			ValidatorUtil.handleValidation(receptionAggregateBO, receptionValidator);
-			// InquiryStudentDO inquiryStudentDOs =
-			// receptionMapper.toInquiryStudentDO(receptionAggregateBO.getInquiryStudent());
-			InquiryStudentDO inquiryStudentDO = new InquiryStudentDO();
-			inquiryStudentDO.setInquiryStudentName(receptionAggregateBO.getInquiryStudent().getInquiryStudentName());
-			inquiryStudentDO.setInquiryStudentAge(receptionAggregateBO.getInquiryStudent().getInquiryStudentAge());
+			receptionDuplicateHandler.checkDuplicate(receptionAggregateBO);
+			InquiryStudentDO inquiryStudentDO = receptionMapper
+					.toInquiryStudentDO(receptionAggregateBO.getInquiryStudent());
+			System.out.println(inquiryStudentDO);
+			// InquiryStudentDO inquiryStudentDO = new InquiryStudentDO();
+			// inquiryStudentDO.setInquiryStudentName(receptionAggregateBO.getInquiryStudent().getInquiryStudentName());
+			/// inquiryStudentDO.setInquiryStudentAge(receptionAggregateBO.getInquiryStudent().getInquiryStudentAge());
 			inquiryStudentDO.setIsActive(Constants.IS_ACTIVE);
 			inquiryStudentDO.setAudit(createAuditModel(inquiryStudentDO.getInquiryStudentName()));
+			inquiryStudentDO.getInquiryFollowUpDO().setIsActive(Constants.IS_ACTIVE);
+			inquiryStudentDO.getInquiryFollowUpDO()
+					.setAudit(createAuditModel(inquiryStudentDO.getInquiryStudentName()));
 			savedinquiryStudent = inquiryStudentRepository.save(inquiryStudentDO);
 		} catch (S2UConfigurationException e) {
 			LOG.equals("--error occured in addInquiryStudent--" + e.getMessage());
 		}
-		return ReceptionAggregateBOBuilder.create().withInquiryStudent(receptionAggregateBO.getInquiryStudent())
-				.build();
+		return ReceptionAggregateBOBuilder.create()
+				.withInquiryStudent(receptionMapper.toInquiryStudentBO(savedinquiryStudent)).build();
 	}
 
 	private AuditModel createAuditModel(String userName) {
