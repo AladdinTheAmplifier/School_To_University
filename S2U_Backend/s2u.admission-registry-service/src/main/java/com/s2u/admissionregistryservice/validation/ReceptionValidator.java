@@ -27,12 +27,15 @@ public class ReceptionValidator implements Validator {
 	public void validate(Object target, Errors errors) {
 		LOG.info("-- Reception Validator Class - validate method --");
 		ReceptionAggregateBO receptionAggregateBO = (ReceptionAggregateBO) target;
+		
 		InquiryStudentBO inquiryStudentBO = receptionAggregateBO.getInquiryStudent();
+		
 		InquiryFollowUpBO inquiryFollowUpBO = receptionAggregateBO.getInquiryStudent().getInquiryFollowUp();
 
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "inquiryStudent.inquiryStudentName",
 				ReceptionErrorCode.INQUIRY_STUDENT_NAME_INVALID.getCodeStr(),
 				ReceptionErrorCode.INQUIRY_STUDENT_NAME_INVALID.getMessage());
+
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "inquiryStudent.inquiryStudentBirthday",
 				ReceptionErrorCode.INQUIRY_STUDENT_BIRTHDAY_INVALID.getCodeStr(),
 				ReceptionErrorCode.INQUIRY_STUDENT_BIRTHDAY_INVALID.getMessage());
@@ -53,13 +56,15 @@ public class ReceptionValidator implements Validator {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "inquiryStudent.inquiryFollowUp.followUpUser",
 				ReceptionErrorCode.INQUIRY_FOLLOW_UP_USER_INVALID.getCodeStr(),
 				ReceptionErrorCode.INQUIRY_FOLLOW_UP_USER_INVALID.getMessage());
-		ValidateReceptionPatterns(errors, inquiryStudentBO, inquiryFollowUpBO);
-		ValidateReceptionFollowUp(errors, inquiryFollowUpBO);
+
+		//ValidateReceptionPatterns(errors, inquiryStudentBO, inquiryFollowUpBO);
+		//ValidateReceptionFollowUp(errors, inquiryFollowUpBO);
 	}
 
 	private void ValidateReceptionPatterns(Errors errors, InquiryStudentBO inquiryStudentBO,
 			InquiryFollowUpBO inquiryFollowUpBO) {
-		if (inquiryStudentBO.getInquiryPhoneNumber() != null) {
+		if ((inquiryStudentBO.getInquiryPhoneNumber() != null)
+				&& (Integer.getInteger(inquiryStudentBO.getInquiryPhoneNumber()) >= 11)) {
 			boolean isValid = CommonValidatorUtil.isPhoneNumber(inquiryStudentBO.getInquiryPhoneNumber());
 			if (!isValid) {
 				errors.rejectValue("inquiryStudent.inquiryPhoneNumber",
@@ -67,7 +72,7 @@ public class ReceptionValidator implements Validator {
 						ReceptionErrorCode.INQUIRY_STUDENT_PHONE_NUMBER_INVALID.getMessage());
 			}
 		}
-		if (inquiryStudentBO.getInquiryWhatsappNumber() != null) {
+		if ((inquiryStudentBO.getInquiryWhatsappNumber() != null)&& (Integer.getInteger(inquiryStudentBO.getInquiryWhatsappNumber()) >= 11)) {
 			boolean isValid = CommonValidatorUtil.isWhatsAppPhoneNumber(inquiryStudentBO.getInquiryWhatsappNumber());
 			if (!isValid) {
 				errors.rejectValue("inquiryStudent.inquiryWhatsappNumber",

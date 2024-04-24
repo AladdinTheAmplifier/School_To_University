@@ -4,11 +4,14 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.s2u.admission-registry-service</groupId>
-	<artifactId>s2u.admission-registry-service</artifactId>
+	<groupId>s2u-child-admission-registry-service</groupId>
+	<artifactId>s2u-child-admission-registry-service</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
 
-	<name>s2u.admission-registry-service</name>
-	<description>S2U Admission Registry Information</description>
+
+	<name>s2u-child-admission-registry-service</name>
+	<description>Child Admission Registry Service</description>
 
 	<!--====================Parent Service Configuration=========================-->
 	<parent>
@@ -25,7 +28,7 @@
 		<mapstruct.version>1.5.5.Final</mapstruct.version>
 		<hibernate-envers.version>6.4.1.Final</hibernate-envers.version>
 		<lombok.version>1.18.30</lombok.version>
-		
+		<maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
 	</properties>
 	<!--=========================================================================-->
 

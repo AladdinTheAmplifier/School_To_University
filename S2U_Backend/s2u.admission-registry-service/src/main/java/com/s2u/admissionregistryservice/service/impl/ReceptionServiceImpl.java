@@ -1,5 +1,8 @@
 package com.s2u.admissionregistryservice.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
@@ -7,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.s2u.admissionregistryservice.domain.InquiryStudentBO;
 import com.s2u.admissionregistryservice.domain.ReceptionAggregateBO;
 import com.s2u.admissionregistryservice.domain.ReceptionAggregateBOBuilder;
 import com.s2u.admissionregistryservice.entity.AuditModel;
@@ -21,14 +25,14 @@ import com.s2u.commonlib.util.Constants;
 import com.s2u.commonlib.util.ValidatorUtil;
 
 @Service
-@Transactional
+//@Transactional
 public class ReceptionServiceImpl implements ReceptionService {
 
 	private static final Logger LOG = LoggerFactory.getLogger(ReceptionServiceImpl.class);
 
 	@Autowired
 	ReceptionValidator receptionValidator;
-	
+
 	@Autowired
 	ReceptionDuplicateHandler receptionDuplicateHandler;
 
@@ -38,11 +42,27 @@ public class ReceptionServiceImpl implements ReceptionService {
 	@Autowired
 	InquiryStudentRepository inquiryStudentRepository;
 
-	@SuppressWarnings("unlikely-arg-type")
+	
+	public ReceptionAggregateBO getAllInquiryStudentDetails() {
+		LOG.info("--start method of getAllInquiryStudentDetails--");
+		List<InquiryStudentBO> inquiryStudentBOs = null;
+		try {
+			List<InquiryStudentDO> inquiryStudentDOs = inquiryStudentRepository
+					.findAllActiveInquiryStudentDetails(Constants.IS_ACTIVE);
+			if (inquiryStudentDOs.isEmpty()) {
+				inquiryStudentDOs = new ArrayList<>();
+				inquiryStudentBOs = receptionMapper.toInquiryStudentBOs(inquiryStudentDOs);
+			}
+		} catch (S2UConfigurationException e) {
+			LOG.equals("--error occured in getAllInquiryStudentDetails--" + e.getMessage());
+		}
+		return ReceptionAggregateBOBuilder.create().withInquiryStudents(inquiryStudentBOs).build();
+	}
+
 	@Override
 	public ReceptionAggregateBO addInquiryStudent(ReceptionAggregateBO receptionAggregateBO) {
-		LOG.info("--start method of addInquiryStudent");
-		@SuppressWarnings("unused")
+		LOG.info("--start method of addInquiryStudent--");
+
 		InquiryStudentDO savedinquiryStudent = null;
 		try {
 			ValidatorUtil.handleValidation(receptionAggregateBO, receptionValidator);
@@ -50,9 +70,6 @@ public class ReceptionServiceImpl implements ReceptionService {
 			InquiryStudentDO inquiryStudentDO = receptionMapper
 					.toInquiryStudentDO(receptionAggregateBO.getInquiryStudent());
 			System.out.println(inquiryStudentDO);
-			// InquiryStudentDO inquiryStudentDO = new InquiryStudentDO();
-			// inquiryStudentDO.setInquiryStudentName(receptionAggregateBO.getInquiryStudent().getInquiryStudentName());
-			/// inquiryStudentDO.setInquiryStudentAge(receptionAggregateBO.getInquiryStudent().getInquiryStudentAge());
 			inquiryStudentDO.setIsActive(Constants.IS_ACTIVE);
 			inquiryStudentDO.setAudit(createAuditModel(inquiryStudentDO.getInquiryStudentName()));
 			inquiryStudentDO.getInquiryFollowUpDO().setIsActive(Constants.IS_ACTIVE);

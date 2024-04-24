@@ -38,11 +38,6 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>com.s2u.admission-registry-service</groupId>
-			<artifactId>s2u.admission-registry-service</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
 	</dependencies>
 	<!--=========================================================================-->
 
